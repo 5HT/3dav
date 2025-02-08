@@ -21,7 +21,7 @@ winget install cmake Git.Git
 
 Install manually <a href="https://winlibs.com">winlibs.com</a> binary
 package of <a href="https://www.mingw-w64.org">MinGW-64</a>,
-Install <a href="https://www.msys2.org">MSYS2</a>, build and intall
+Install <a href="https://www.msys2.org">MSYS2</a>, build and install
 <a href="https://github.com/freeglut/freeglut">freeglut</a> library from sources.
 
 ```
