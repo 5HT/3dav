@@ -9,10 +9,6 @@
 #include <GL/freeglut.h>
 #endif
 
-#ifndef M_PI
-#define M_PI	3.14159265358979323846
-#endif
-
 static const char *helpprompt[] = {"Press F1 for help", 0};
 static const char *helptext[] = {
 	"Rotate: left mouse drag",
