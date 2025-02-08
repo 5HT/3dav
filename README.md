@@ -61,4 +61,4 @@ gcc -o 3dav 3dav.c -framework OpenGL -framework GLUT
 Credits
 -------
 
-* Namdak Tonpa, <a href="https://github.com/BitEdits/">BitEdits Corporation.</a>
+* Namdak Tonpa, <a href="https://github.com/BitEdits/">BitEdits</a> Corporation.
