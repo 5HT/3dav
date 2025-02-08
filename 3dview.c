@@ -155,7 +155,7 @@ void loadObj(char *fname) {
         glEnd();
 */
         // Draw triangles
-        glBegin(GL_TRIANGLES);
+        glBegin(GL_POLYGON);
         for (int i = 0; i < faceCount; i++) {
             int v1 = faces[i][0] - 1; // OBJ indices start at 1
             int v2 = faces[i][1] - 1;
