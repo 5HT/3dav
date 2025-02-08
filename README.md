@@ -19,8 +19,10 @@ For Windows use `winget`:
 winget install cmake Git.Git
 ```
 
-Install manually <a href="https://winlibs.com">winlibs.com</a> binary package of MinGW-64,
-Install <a href="https://www.msys2.org">MSYS2</a>, build and intall freeglut from sources.
+Install manually <a href="https://winlibs.com">winlibs.com</a> binary
+package of <a href="https://www.mingw-w64.org">MinGW-64</a>,
+Install <a href="https://www.msys2.org">MSYS2</a>, build and intall
+<a href="https://github.com/freeglut/freeglut">freeglut</a> library from sources.
 
 ```
 cmake -G "MinGW" -S . B . -DCMAKE_INSTALL_PREFIX=E:\Software\Systems\mingw64\
