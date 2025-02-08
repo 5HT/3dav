@@ -57,7 +57,7 @@ int main(int argc, char **argv)
 	glutInit(&argc, argv);
 	glutInitWindowSize(800, 600);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
-	glutCreateWindow("freeglut 3D view demo");
+	glutCreateWindow("3dav");
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
@@ -70,8 +70,10 @@ int main(int argc, char **argv)
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+
         loadObj("porsche.obj");//replace porsche.obj with radar.obj or any other .obj to display it
 	glutMainLoop();
+
 	return 0;
 }
 
