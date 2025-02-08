@@ -59,7 +59,7 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 	glutCreateWindow("freeglut 3D view demo");
 
-	glutDisplayFunc(display2);
+	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keypress);
 	glutSpecialFunc(skeypress);
@@ -171,7 +171,7 @@ void loadObj(char *fname) {
 }
 
 
-void display2(void)
+void display(void)
 {  
 	long tm;
 	float lpos[] = {-1, 2, 3, 0};
@@ -195,7 +195,7 @@ void display2(void)
 		glRotatef(tm / 10.0f, 0, 1, 0);
 	}
 
-   	drawCar();
+   	drawObj();
 
 	print_help();
 
