@@ -80,8 +80,8 @@ void idle(void)
 	glutPostRedisplay();
 }
 
-GLuint elephant;
-float elephantrot;
+GLuint object;
+float objectrot;
 char ch='1';
 
 //other functions and main
@@ -93,7 +93,7 @@ void loadObj(char *fname) {
     int read;
     GLfloat x, y, z;
     char ch;
-    elephant = glGenLists(1);
+    object = glGenLists(1);
     fp = fopen(fname, "r");
     if (!fp) {
         printf("can't open file %s\n", fname);
@@ -140,13 +140,13 @@ void loadObj(char *fname) {
     fclose(fp);
 
     // Compile the display list
-    glNewList(elephant, GL_COMPILE);
+    glNewList(object, GL_COMPILE);
     {
         glPushMatrix();
 
+/*
         // Draw points
         glPointSize(3.0);
-/*
         glBegin(GL_POINTS);
         for (int i = 0; i < vertexCount; i++) {
             glVertex3f(vertices[i][0], vertices[i][1], vertices[i][2]);
@@ -209,7 +209,7 @@ void drawObj()
  	glPushMatrix();
  	glColor3f(1.0,0.23,0.27);
  	glScalef(0.1,0.1,0.1);
- 	glCallList(elephant);
+ 	glCallList(object);
  	glPopMatrix();
 
 	glBegin(GL_QUADS);
@@ -225,20 +225,7 @@ void print_help(void)
 {
 	int i;
 	const char *s, **text;
-
-	glPushAttrib(GL_ENABLE_BIT);
-	glDisable(GL_LIGHTING);
-	glDisable(GL_DEPTH_TEST);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	glOrtho(0, win_width, 0, win_height, -1, 1);
-
 	text = help ? helptext : helpprompt;
-
 	for(i=0; text[i]; i++) {
 		glColor3f(0, 0.1, 0);
 		glRasterPos2f(7, win_height - (i + 1) * 20 - 2);
@@ -254,10 +241,6 @@ void print_help(void)
 		}
 	}
 
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
-
-	glPopAttrib();
 }
 
 void reshape(int x, int y)
