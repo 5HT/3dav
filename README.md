@@ -5,9 +5,8 @@ Features
 --------
 
 * Wavefront OBJ format
-* Scene
-* Scrolling animation
-* Rotation animation
+* Scrolling animation (Swipe Left/Right)
+* Rotation animation (Gran Turismo Garage)
 * Windows [1], Linux [2], Mac [3] support
 * Dependencies: OpenGL, GLUT, Math
 
@@ -34,11 +33,7 @@ For Ubuntu use `apt`:
 sudo apt install freeglut3-dev mesa-utils
 ```
 
-For Mac use `brew`:
-
-```
-brew install freeglut
-```
+For Mac do nothing.
 
 Compilation
 -----------
@@ -58,11 +53,10 @@ gcc -o 3dav 3dav.c -lglut -lGLU -lGL -lm
 Mac:
 
 ```
-gcc -o 3dav 3dav.c -framework OpenGL -framework GLUT \
-                   -I /opt/homebrew/Cellar/freeglut/3.6.0/include
+gcc -o 3dav 3dav.c -framework OpenGL -framework GLUT
 ```
 
 Credits
 -------
 
-* Namdak Tonpa
+* Namdak Tonpa, <a href="https://github.com/BitEdits/">BitEdits Corporation.</a>

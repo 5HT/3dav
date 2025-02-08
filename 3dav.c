@@ -1,25 +1,16 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <GL/freeglut.h>
 
-// For Windows [1], Linux [2] and Mac [3]:
-
-// 1) MinGW-64, winlibs.com, MSYS2, build and intall freeglut from sources
-// 2) sudo apt install freeglut3-dev mesa-utils
-// 3) brew install freeglut
-
-// 1) gcc -o 3dav 3dav.c -lopengl32 -lglu32 -lfreeglut
-// 2) gcc -o 3dav 3dav.c -lglut -lGLU -lGL -lm
-// 3) gcc -o 3dav 3dav.c -framework OpenGL -framework GLUT \
-//                       -I /opt/homebrew/Cellar/freeglut/3.6.0/include
+#if defined(__APPLE__) && defined(__MACH__)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 
 #ifndef M_PI
 #define M_PI	3.14159265358979323846
-#endif
-
-#ifdef _MSC_VER
-#pragma warning (disable: 4305 4244)
 #endif
 
 static const char *helpprompt[] = {"Press F1 for help", 0};
