@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-        loadObj("porsche.obj");//replace porsche.obj with radar.obj or any other .obj to display it
+        loadObj("box.obj");//replace porsche.obj with radar.obj or any other .obj to display it
 	glutMainLoop();
 	return 0;
 }
@@ -134,12 +134,8 @@ void loadObj(char *fname) {
             }
 
             // Store the face indices
-            if (count == 3) { // Ensure it's a triangle
-                faces[faceCount][0] = v[0];
-                faces[faceCount][1] = v[1];
-                faces[faceCount][2] = v[2];
-                faceCount++;
-            }
+            for (int i=0; i < count; i++) faces[faceCount][i] = v[i];
+            faceCount++;
         }
     }
     fclose(fp);
