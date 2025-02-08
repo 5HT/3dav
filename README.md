@@ -4,11 +4,11 @@
 Features
 --------
 
-* Wavefront OBJ format
+* Wavefront OBJ text file format
 * Scrolling animation (Swipe Left/Right)
 * Rotation animation (Gran Turismo Garage)
 * Windows, Linux, Mac support
-* Dependencies: OpenGL, GLUT, Math
+* Lightweight: OpenGL, GLU, GLUT/GLFW
 
 Setup
 -----
