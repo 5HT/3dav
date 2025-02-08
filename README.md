@@ -7,7 +7,7 @@ Features
 * Wavefront OBJ format
 * Scrolling animation (Swipe Left/Right)
 * Rotation animation (Gran Turismo Garage)
-* Windows [1], Linux [2], Mac [3] support
+* Windows, Linux, Mac support
 * Dependencies: OpenGL, GLUT, Math
 
 Setup
