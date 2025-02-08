@@ -231,7 +231,20 @@ void print_help(void)
 {
 	int i;
 	const char *s, **text;
+
+	glPushAttrib(GL_ENABLE_BIT);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0, win_width, 0, win_height, -1, 1);
+
 	text = help ? helptext : helpprompt;
+
 	for(i=0; text[i]; i++) {
 		glColor3f(0, 0.1, 0);
 		glRasterPos2f(7, win_height - (i + 1) * 20 - 2);
@@ -247,10 +260,18 @@ void print_help(void)
 		}
 	}
 
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+
+	glPopAttrib();
 }
 
 void reshape(int x, int y)
 {
+	float vsz, aspect = (float)x / (float)y;
+	win_width = x;
+	win_height = y;
+
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
