@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-        loadObj("box.obj");//replace porsche.obj with radar.obj or any other .obj to display it
+        loadObj("porsche.obj");//replace porsche.obj with radar.obj or any other .obj to display it
 	glutMainLoop();
 	return 0;
 }
@@ -155,7 +155,7 @@ void loadObj(char *fname) {
         glEnd();
 */
         // Draw triangles
-        glBegin(GL_POLYGON);
+        glBegin(GL_TRIANGLES);
         for (int i = 0; i < faceCount; i++) {
             int v1 = faces[i][0] - 1; // OBJ indices start at 1
             int v2 = faces[i][1] - 1;
@@ -220,10 +220,6 @@ void drawCar()
 	glVertex3f( 5, -1.7, -5);
 	glVertex3f(-5, -1.7, -5);
 	glEnd();
-
-
-// 	elephantrot=elephantrot+0.6;
-// 	if(elephantrot>360)elephantrot=elephantrot-360;
 }
 
 void display(void)
@@ -324,20 +320,12 @@ void print_help(void)
 	glPopAttrib();
 }
 
-#define ZNEAR	0.5f
 void reshape(int x, int y)
 {
-	float vsz, aspect = (float)x / (float)y;
-	win_width = x;
-	win_height = y;
-
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	vsz = 0.4663f * ZNEAR;
-//	glFrustum(-aspect * vsz, aspect * vsz, -vsz, vsz, 0.5, 500.0);
         gluPerspective (60, (GLfloat)x / (GLfloat)y, 0.1, 1000.0);
-	//glOrtho(-25,25,-2,2,0.1,100);	
 	glMatrixMode(GL_MODELVIEW);
 }
 
