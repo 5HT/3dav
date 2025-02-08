@@ -3,7 +3,12 @@
 #include <math.h>
 #include <GL/freeglut.h>
 
+// For Linux and Mac
+
 // gcc -o 3Dview 3dview.c -lopengl32 -lglu32 -lfreeglut
+// gcc -o 3Dview 3dview.c -L /opt/homebrew/Cellar/freeglut/3.6.0/lib \
+//                        -I /opt/homebrew/Cellar/freeglut/3.6.0/include \
+//                        -framework OpenGL -framework GLUT
 
 #ifndef M_PI
 #define M_PI	3.14159265358979323846
