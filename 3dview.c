@@ -27,8 +27,7 @@ static const char *helptext[] = {
 
 void loadObj(char * x);
 void display(void);
-void display2(void);
-void drawCar(void);
+void drawObj(void);
 void print_help(void);
 void reshape(int x, int y);
 void keypress(unsigned char key, int x, int y);
@@ -205,7 +204,7 @@ void display2(void)
 
 }
 
-void drawCar()
+void drawObj()
 {
  	glPushMatrix();
  	glColor3f(1.0,0.23,0.27);
@@ -220,65 +219,6 @@ void drawCar()
 	glVertex3f( 5, -1.7, -5);
 	glVertex3f(-5, -1.7, -5);
 	glEnd();
-}
-
-void display(void)
-{
-	long tm;
-	float lpos[] = {-1, 2, 3, 0};
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslatef(0, 0, -cam_dist);
-	glRotatef(cam_phi, 1, 0, 0);
-	glRotatef(cam_theta, 0, 1, 0);
-	glTranslatef(cam_pan[0], cam_pan[1], cam_pan[2]);
-
-	glLightfv(GL_LIGHT0, GL_POSITION, lpos);
-
-	glPushMatrix();
-	if(anim) {
-		tm = glutGet(GLUT_ELAPSED_TIME) - anim_start;
-		glRotatef(tm / 10.0f, 1, 0, 0);
-		glRotatef(tm / 10.0f, 0, 1, 0);
-	}
-	glutSolidTorus(0.3, 1, 16, 24);
-	glPopMatrix();
-
-	glutSolidSphere(0.4, 16, 8);
-
-	glPushMatrix();
-	glTranslatef(-2.5, 0, 0);
-	glutSolidCube(1.5);
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslatef(2.5, -1, 0);
-	glRotatef(-90, 1, 0, 0);
-	glutSolidCone(1.1, 2, 16, 2);
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslatef(0, -0.5, 2.5);
-	glFrontFace(GL_CW);
-	glutSolidTeapot(1.0);
-	glFrontFace(GL_CCW);
-	glPopMatrix();
-
-	glBegin(GL_QUADS);
-	glNormal3f(0, 1, 0);
-	glVertex3f(-5, -1.3, 5);
-	glVertex3f(5, -1.3, 5);
-	glVertex3f(5, -1.3, -5);
-	glVertex3f(-5, -1.3, -5);
-	glEnd();
-
-	print_help();
-
-	glutSwapBuffers();
-	nframes++;
 }
 
 void print_help(void)
