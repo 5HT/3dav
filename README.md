@@ -30,7 +30,7 @@ make install
 For Ubuntu use `apt`:
 
 ```
-sudo apt install freeglut3-dev mesa-utils
+sudo apt install freeglut3-dev mesa-utils build-essential
 ```
 
 For Mac do nothing.
