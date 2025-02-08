@@ -3,13 +3,16 @@
 #include <math.h>
 #include <GL/freeglut.h>
 
-// For Windows, Linux and Mac
+// For Windows [1], Linux [2] and Mac [3]:
 
-// gcc -o 3Dview 3dview.c -lopengl32 -lglu32 -lfreeglut
-// gcc -o 3Dview 3dview.c -lglut -lGLU -lGL -lm
-// gcc -o 3Dview 3dview.c -L /opt/homebrew/Cellar/freeglut/3.6.0/lib \
-//                        -I /opt/homebrew/Cellar/freeglut/3.6.0/include \
-//                        -framework OpenGL -framework GLUT
+// 1) MinGW-64, winlibs.com, MSYS2, build and intall freeglut from sources
+// 2) sudo apt install freeglut3-dev mesa-utils
+// 3) brew install freeglut
+
+// 1) gcc -o 3dav 3dav.c -lopengl32 -lglu32 -lfreeglut
+// 2) gcc -o 3dav 3dav.c -lglut -lGLU -lGL -lm
+// 3) gcc -o 3dav 3dav.c -framework OpenGL -framework GLUT \
+//                       -I /opt/homebrew/Cellar/freeglut/3.6.0/include
 
 #ifndef M_PI
 #define M_PI	3.14159265358979323846
@@ -197,7 +200,6 @@ void display(void)
 	glPushMatrix();
 	if(anim) {
 		tm = glutGet(GLUT_ELAPSED_TIME) - anim_start;
-		glRotatef(tm / 10.0f, 1, 0, 0);
 		glRotatef(tm / 10.0f, 0, 1, 0);
 	}
 
