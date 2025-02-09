@@ -4,10 +4,9 @@
 Features
 --------
 
-* Wavefront OBJ text file format
-* Scrolling animation (Swipe Left/Right)
-* Rotation animation (Gran Turismo Garage)
-* Windows, Linux, Mac support
+* Formats: Wavefront OBJ/FBX file formats
+* Animations: Rotation, Scrolling, Keyframes
+* Crossplatform: Windows, Linux, Mac
 * Lightweight: OpenGL, GLU, GLUT/GLFW
 
 Setup
