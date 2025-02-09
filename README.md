@@ -42,13 +42,13 @@ Compilation
 Windows:
 
 ```
-gcc -o 3dav 3dav.c -lopengl32 -lglu32 -lfreeglut
+gcc -o 3dav 3dav.c -lopengl32 -lfreeglut
 ```
 
 Linux:
 
 ```
-gcc -o 3dav 3dav.c -lglut -lGLU -lGL -lm
+gcc -o 3dav 3dav.c -lglut -lGL -lm
 ```
 
 Mac:

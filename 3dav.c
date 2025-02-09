@@ -9,6 +9,26 @@
 #include <GL/freeglut.h>
 #endif
 
+void setPerspectiveGLUT(float fov, float aspect, float nearx, float farx)
+{
+    float f = 1.0f / tan(fov * 0.5f);
+    float range = nearx - farx;
+    float matrix[16] = {
+        f / aspect, 0.0f, 0.0f, 0.0f,
+        0.0f, f, 0.0f, 0.0f,
+        0.0f, 0.0f, (farx + nearx) / range, -1.0f,
+        0.0f, 0.0f, (2.0f * farx * nearx) / range, 0.0f
+    };
+
+    glMultMatrixf(matrix);
+}
+
+void setPerspective(float fov, float aspect, float nearx, float farx)
+{
+    setPerspectiveGLUT(fov, aspect, nearx, farx);
+//    glFrustum(-aspect * nearx, aspect * nearx, -nearx, nearx, nearx, farx);
+}
+
 static const char *helpprompt[] = {"Press F1 for help", 0};
 static const char *helptext[] = {
 	"Rotate: left mouse drag",
@@ -66,6 +86,7 @@ int main(int argc, char **argv)
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+//        glClear(GL_DEPTH_BUFFER_BIT);
 
         loadObj("porsche.obj");//replace porsche.obj with radar.obj or any other .obj to display it
 	glutMainLoop();
@@ -266,7 +287,7 @@ void reshape(int x, int y)
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-        gluPerspective (60, (GLfloat)x / (GLfloat)y, 0.1, 1000.0);
+        setPerspective(45, (GLfloat)x / (GLfloat)y, 0.1, 100.0);
 	glMatrixMode(GL_MODELVIEW);
 }
 
