@@ -4,8 +4,6 @@
 #include <math.h>
 #include <string.h>
 
-// gcc -o 3dav_glfw 3dav_glfw.c -lopengl32 -lglfw3 -lgdi32
-
 const char *helptext[] = {
     "Rotate: left mouse drag",
     " Scale: right mouse drag up/down",
@@ -210,46 +208,32 @@ void loadObj(char *fname) {
         exit(1);
     }
 
-    // Temporary storage for vertices and faces
-    GLfloat vertices[10000][3]; // Adjust size as needed
-    int faces[10000][3];        // Adjust size as needed
+    GLfloat vertices[10000][3];
+    int faces[10000][3];
     int vertexCount = 0;
     int faceCount = 0;
 
-    // Read the file and store vertices and faces
     while (!feof(fp)) {
-        read = fscanf(fp, " %c", &ch); // Read the first character of the line
+        read = fscanf(fp, " %c", &ch);
         if (ch == 'v') {
-            // Read vertex data
             fscanf(fp, "%f %f %f", &vertices[vertexCount][0], &vertices[vertexCount][1], &vertices[vertexCount][2]);
             vertexCount++;
         } else if (ch == 'f') {
-            // Read face data (handling all formats)
             char faceLine[256];
-            fgets(faceLine, sizeof(faceLine), fp); // Read the rest of the line
-
-            int v[3]; // Vertex indices for the face
+            fgets(faceLine, sizeof(faceLine), fp);
+            int v[3];
             int count = 0;
-
-            // Parse the face line
             char *token = strtok(faceLine, " \t\n");
             while (token != NULL && count < 3) {
-                // Extract the vertex index (first number in the group)
                 sscanf(token, "%d", &v[count]);
-
-                // Move to the next token
                 token = strtok(NULL, " \t\n");
                 count++;
             }
-
-            // Store the face indices
             for (int i=0; i < count; i++) faces[faceCount][i] = v[i];
             faceCount++;
         }
     }
     fclose(fp);
-
-    // Compile the display list
     glNewList(object, GL_COMPILE);
     {
         glPushMatrix();
@@ -365,14 +349,14 @@ int main(int argc, char **argv)
         fprintf(stderr, "Failed to initialize GLFW\n");
         return -1;
     }
-     
+
     window = glfwCreateWindow(win_width, win_height, "3DAV", NULL, NULL);
     if (!window) {
         fprintf(stderr, "Failed to create GLFW window\n");
         glfwTerminate();
         return -1;
     }
-    
+
     glfwMakeContextCurrent(window);
     glfwSetErrorCallback(error_callback);
     glfwSetKeyCallback(window, key_callback);
@@ -395,7 +379,7 @@ int main(int argc, char **argv)
         render(window);
         glfwSwapBuffers(window);
     }
-    
+
     glfwDestroyWindow(window);
     glfwTerminate();
 
