@@ -188,7 +188,7 @@ void joystick_callback(int joy, int event) {
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    printf("Size callback %i:%i\n", width, height);
+    printf("Resize callback %i:%i\n", width, height);
 
     win_width = width;
     win_height = height;
