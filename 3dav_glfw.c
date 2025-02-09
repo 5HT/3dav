@@ -48,6 +48,7 @@ int buttonsCount;
 int axisCount;
 int fullscr;
 int prev_xsz, prev_ysz;
+float lpos[] = {-1, 2, 3, 0};
 
 #ifndef GL_FRAMEBUFFER_SRGB
 #define GL_FRAMEBUFFER_SRGB	0x8db9
@@ -176,7 +177,6 @@ void joystick_callback(int joy, int event) {
     }
 }
 
-// Framebuffer size callback
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     win_width = width;
@@ -287,18 +287,15 @@ void display(GLFWwindow* window)
 	glRotatef(cam_phi, 1, 0, 0);
 	glRotatef(cam_theta, 0, 1, 0);
 	glTranslatef(cam_pan[0], cam_pan[1], cam_pan[2]);
-
 	glLightfv(GL_LIGHT0, GL_POSITION, lpos);
-
 	glPushMatrix();
-	if(anim) {
-		tm = glfwGetTime() * 1000 - anim_start;
-		glRotatef(tm / 10.0f, 0, 1, 0);
-	}
+
+	if(anim) { glRotatef((glfwGetTime() * 1000 - anim_start) / 10.0f, 0, 1, 0); }
 
    	drawObj();
 
 	print_help();
+
 
         glfwSwapBuffers(window);
 	nframes++;
@@ -430,10 +427,9 @@ int main(int argc, char **argv)
     glClear(GL_DEPTH_BUFFER_BIT);
 
     loadObj("porsche.obj");
-    
+
     while (!glfwWindowShouldClose(window)) {
         display(window);
-//        process_joystick_input();
         glfwPollEvents();
     }
     
