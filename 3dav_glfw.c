@@ -37,6 +37,8 @@ int prev_xsz, prev_ysz;
 GLFWwindow* window;
 float lpos[] = {-1, 2, 3, 0};
 
+void render(GLFWwindow* window);
+
 void setPerspective(float fov, float aspect, float nearx, float farx)
 {
     glFrustum(-aspect * nearx, aspect * nearx, -nearx, nearx, nearx, farx);
@@ -186,6 +188,8 @@ void joystick_callback(int joy, int event) {
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
+    printf("Size callback %i:%i\n", width, height);
+
     win_width = width;
     win_height = height;
 
@@ -194,6 +198,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glLoadIdentity();
     setPerspective(45.0f, (float)width / (float)height, 0.1f, 100.0f);
     glMatrixMode(GL_MODELVIEW);
+
+    render(window);
+    glfwSwapBuffers(window);
+    
 }
 
 void loadObj(char *fname) {
