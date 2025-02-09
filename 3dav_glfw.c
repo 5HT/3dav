@@ -121,11 +121,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	    case GLFW_KEY_SPACE:
                  anim ^= 1;
 	  	 if(anim) {
-	 		anim_start = glfwGetTime();
+	 		anim_start = glfwGetTime() * 1000;
 	 		nframes = 0;
 	 	 } else {
-	 		double tm = glfwGetTime() - anim_start;
-			long fps = (nframes * 1) / tm;
+	 		double tm = glfwGetTime() * 1000 - anim_start;
+			long fps = (nframes * 100000) / tm;
 			printf("framerate: %ld.%ld fps\n", fps / 100, fps % 100);
 		 }
 		 break;
@@ -183,14 +183,10 @@ void joystick_callback(int joy, int event) {
 // Framebuffer size callback
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    // Update the window size
     win_width = width;
     win_height = height;
 
-    // Set the OpenGL viewport to match the window size
     glViewport(0, 0, width, height);
-
-    // Update the projection matrix with the new aspect ratio
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     setPerspective(45.0f, (float)width / (float)height, 0.1f, 100.0f);
@@ -300,7 +296,7 @@ void display(GLFWwindow* window)
 
 	glPushMatrix();
 	if(anim) {
-		tm = glfwGetTime() - anim_start;
+		tm = glfwGetTime() * 1000 - anim_start;
 		glRotatef(tm / 10.0f, 0, 1, 0);
 	}
 
@@ -405,8 +401,6 @@ void cursor_position_callback(GLFWwindow* window, double x, double y)
 
 int main(int argc, char **argv)
 {
-//    glutInit(&argc, argv);
-
     if (!glfwInit()) {
         fprintf(stderr, "Failed to initialize GLFW\n");
         return -1;
@@ -434,14 +428,16 @@ int main(int argc, char **argv)
     glMatrixMode(GL_MODELVIEW);
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
+    glClear(GL_DEPTH_BUFFER_BIT);
 
     loadObj("porsche.obj");
     
     while (!glfwWindowShouldClose(window)) {
         display(window);
-        process_joystick_input();
+//        process_joystick_input();
         glfwPollEvents();
     }
     

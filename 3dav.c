@@ -86,7 +86,7 @@ int main(int argc, char **argv)
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-//        glClear(GL_DEPTH_BUFFER_BIT);
+        glClear(GL_DEPTH_BUFFER_BIT);
 
         loadObj("porsche.obj");//replace porsche.obj with radar.obj or any other .obj to display it
 	glutMainLoop();
