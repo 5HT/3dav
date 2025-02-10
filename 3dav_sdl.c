@@ -176,13 +176,13 @@ void render(SDL_Renderer *renderer)
     if(anim) { glRotatef((SDL_GetTicks() - anim_start) / 10.0f, 0, 1, 0); }
 
     drawObj();
+
     print_help(renderer);
 
     nframes++;
 }
 
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
-//int main(int argc, char **argv)
 {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0) {
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
