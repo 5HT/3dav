@@ -37,7 +37,7 @@ int fullscr;
 int prev_xsz, prev_ysz;
 float lpos[] = {-1, 2, 3, 0};
 
-void render();
+void render(SDL_Renderer *renderer);
 void setPerspective(float fov, float aspect, float nearx, float farx);
 void loadObj(char *fname);
 void drawObj();
@@ -126,6 +126,7 @@ void drawObj()
 
 void print_help(SDL_Renderer *renderer)
 {
+/*
     int i;
     const char **text;
     text = help ? helptext : helpprompt;
@@ -152,6 +153,7 @@ void print_help(SDL_Renderer *renderer)
         SDL_FreeSurface(textSurface);
         SDL_DestroyTexture(textTexture);
     }
+*/
 }
 
 void render(SDL_Renderer *renderer)
@@ -195,7 +197,7 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    font = TTF_OpenFont("CascadiaCode.ttf", 24); // Replace with your font path and size
+    font = TTF_OpenFont("CascadiaCode.ttf", 24);
     if (!font) {
         fprintf(stderr, "Failed to load font: %s\n", TTF_GetError());
         TTF_Quit();
@@ -206,16 +208,6 @@ int main(int argc, char **argv)
     window = SDL_CreateWindow("3DAV", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, win_width, win_height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
     if (!window) {
         fprintf(stderr, "Failed to create SDL window\n");
-        SDL_Quit();
-        return -1;
-    }
-
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!renderer) {
-        fprintf(stderr, "Failed to create SDL renderer: %s\n", SDL_GetError());
-        SDL_DestroyWindow(window);
-        TTF_CloseFont(font);
-        TTF_Quit();
         SDL_Quit();
         return -1;
     }
