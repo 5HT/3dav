@@ -38,7 +38,7 @@ sudo apt install freeglut3-dev libglfw3-dev mesa-utils build-essential libsdl2-2
 For Mac use `brew`:
 
 ```
-brew install glfw
+brew install glfw SDL2_ttf
 ```
 
 Compilation
@@ -65,6 +65,7 @@ Mac:
 ```
 gcc -o 3dav 3dav_glut.c -framework OpenGL -framework GLUT
 gcc -o 3dav 3dav_glfw.c -framework OpenGL -lglfw
+gcc -o 3dav 3dav_sdl.c  -framework OpenGL -lSDL2 -lSDL2_ttf
 ```
 
 Credits
