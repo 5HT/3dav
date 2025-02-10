@@ -115,11 +115,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                  glfwSwapBuffers(window);
                  break;
             case GLFW_KEY_F:        
+                 fullscr ^= 1;
                  if (fullscr)
                  {
                      glfwGetWindowSize(window, &prev_xsz, &prev_ysz);
                      const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-                     glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, mode->width, mode->height, mode->refreshRate);
+                     glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 100, 100, mode->width, mode->height, mode->refreshRate);
                  } else {
                      glfwSetWindowMonitor(window, NULL, 100, 100, prev_xsz, prev_ysz, GLFW_DONT_CARE);
                  }
