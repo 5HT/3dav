@@ -243,12 +243,12 @@ int main(int argc, char **argv)
                         case SDLK_SPACE:
                             anim ^= 1;
                             if(anim) {
-                                anim_start = SDL_GetTicks();
+                                anim_start = SDL_GetTicks64();
                                 nframes = 0;
                             } else {
-                                double tm = SDL_GetTicks() - anim_start;
-                                long fps = (nframes * 100000) / tm;
-                                printf("framerate: %ld.%ld fps\n", fps / 100, fps % 100);
+                                double tm = SDL_GetTicks64() - anim_start;
+                                long fps = (nframes) / tm * 1000;
+                                printf("framerate: %ld.%ld fps\n", fps, fps);
                             }
                             break;
                         case SDLK_F1:
