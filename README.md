@@ -47,8 +47,8 @@ Compilation
 Windows:
 
 ```
-gcc -o 3dav 3dav_glut.c -lopengl32 -lfreeglut
 gcc -o 3dav 3dav_glfw.c -lopengl32 -lglfw3 -lgdi32
+gcc -o 3dav 3dav_glut.c -lopengl32 -lfreeglut
 ```
 
 Linux:
@@ -62,6 +62,7 @@ Mac:
 
 ```
 gcc -o 3dav 3dav_glut.c -framework OpenGL -framework GLUT
+gcc -o 3dav 3dav_glfw.c -framework OpenGL -lglfw
 ```
 
 Credits
