@@ -182,7 +182,7 @@ void render(SDL_Renderer *renderer)
     nframes++;
 }
 
-int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+int main(int argc, char **argv)
 {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0) {
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
@@ -316,3 +316,10 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
     return 0;
 }
+
+#ifdef _WIN32
+#include <windows.h>
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR argv, int argc) {
+    return SDL_main(argc, NULL);
+}
+#endif
