@@ -132,7 +132,7 @@ void print_help(SDL_Renderer *renderer)
     SDL_Color textColor = {255, 255, 255, 5};
 
     for (i = 0; text[i]; i++) {
-        SDL_Surface *textSurface = TTF_RenderText_Solid(font, "..................................\0", textColor);
+        SDL_Surface *textSurface = TTF_RenderText_Solid(font, text[i], textColor);
         if (!textSurface) {
             fprintf(stderr, "Failed to render text: %s\n", TTF_GetError());
             continue;
@@ -147,8 +147,7 @@ void print_help(SDL_Renderer *renderer)
 
         int textWidth = textSurface->w;
         int textHeight = textSurface->h;
-//        SDL_FreeSurface(textSurface);
-        SDL_Rect renderQuad = {5, /*win_height -*/ (i + 1) * 20, 600, 30};//textWidth, textHeight};
+        SDL_Rect renderQuad = {5, win_height - (i + 1) * 20, textWidth, textHeight};
         SDL_RenderCopy(renderer, textTexture, NULL, &renderQuad);
         SDL_FreeSurface(textSurface);
         SDL_DestroyTexture(textTexture);
