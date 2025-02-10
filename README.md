@@ -32,7 +32,7 @@ make install
 For Ubuntu use `apt`:
 
 ```
-sudo apt install freeglut3-dev libglfw3-dev mesa-utils build-essential
+sudo apt install freeglut3-dev libglfw3-dev mesa-utils build-essential libsdl2-2.0-0 libsdl2-ttf-dev
 ```
 
 For Mac use `brew`:
@@ -57,6 +57,7 @@ Linux:
 ```
 gcc -o 3dav 3dav_glfw.c -lglfw -lGL -lm
 gcc -o 3dav 3dav_glut.c -lglut -lGL -lm
+gcc -o 3dav 3dav_sdl.c -lSDL2 -lSDL2_ttf -lGL -lm
 ```
 
 Mac:
