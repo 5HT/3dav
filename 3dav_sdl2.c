@@ -342,7 +342,7 @@ int main(int argc, char **argv)
 
         } else {
             render(renderer);
-//            SDL_GL_SwapWindow(window);
+            SDL_GL_SwapWindow(window);
         }
       
     }
