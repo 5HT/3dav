@@ -49,7 +49,7 @@ Windows:
 ```
 gcc -o 3dav 3dav_glfw.c -lopengl32 -lglfw3 -lgdi32
 gcc -o 3dav 3dav_glut.c -lopengl32 -lfreeglut
-gcc -o 3dav 3dav_sdl.c  -lopengl32 -lSDL2 -lSDL2_ttf
+gcc -o 3dav 3dav_sdl2.c -lopengl32 -lSDL2 -lSDL2_ttf
 ```
 
 Linux:
@@ -57,7 +57,7 @@ Linux:
 ```
 gcc -o 3dav 3dav_glfw.c -lglfw -lGL -lm
 gcc -o 3dav 3dav_glut.c -lglut -lGL -lm
-gcc -o 3dav 3dav_sdl.c -lSDL2 -lSDL2_ttf -lGL -lm
+gcc -o 3dav 3dav_sdl2.c -lSDL2 -lGL -lm -lSDL2_ttf
 ```
 
 Mac:
@@ -65,7 +65,7 @@ Mac:
 ```
 gcc -o 3dav 3dav_glut.c -framework OpenGL -framework GLUT
 gcc -o 3dav 3dav_glfw.c -framework OpenGL -lglfw
-gcc -o 3dav 3dav_sdl.c  -framework OpenGL -lSDL2 -lSDL2_ttf
+gcc -o 3dav 3dav_sdl2.c -framework OpenGL -lSDL2 -lSDL2_ttf
 ```
 
 Credits

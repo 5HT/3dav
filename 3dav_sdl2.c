@@ -7,22 +7,28 @@
 #include <string.h>
 
 const char *helptext[] = {
-    "Rotate: left mouse drag",
-    " Scale: right mouse drag up/down",
-    "   Pan: middle mouse drag",
-    "",
-    "Toggle fullscreen: f",
-    "Toggle animation: space",
-    "Quit: escape",
+    "+--------------------------------------------------+",
+    "|             Rotate: Left-MOUSE + DRAG            |",
+    "|         Reposition: Middle-MOUSE + DRAG CURSOR   |",
+    "|               Zoom: Right-MOUSE + DRAG UP/DOWN   |",
+    "|  Toggle fullscreen: F                            |",
+    "|   Toggle animation: Space                        |",
+    "|               Quit: Escape                       |",
+    "+==================================================+",
     0
 };
+
+#define SCREEN_WIDTH    800
+#define SCREEN_HEIGHT   600
+#define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
+#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
 SDL_Renderer *renderer;
 SDL_Window *window;
 TTF_Font *font;
 double tm = 0.0f;
 const char *helpprompt[] = {"Press F1 for help", 0};
-int win_width = 800, win_height = 600;
+int win_width = SCREEN_WIDTH, win_height = SCREEN_HEIGHT;
 float cam_theta, cam_phi = 25, cam_dist = 8;
 float cam_pan[3];
 int mouse_x, mouse_y;
@@ -124,36 +130,54 @@ void drawObj()
     glEnd();
 }
 
+void cls()
+{
+    SDL_Rect squareRect;
+    squareRect.x = 0;
+    squareRect.y = 0;
+    squareRect.w = 800;
+    squareRect.h = 600;
+
+    SDL_RenderFillRect(renderer, &squareRect);
+
+}
+
 void print_help(SDL_Renderer *renderer)
 {
-/*
+    SDL_Color textColor           = { 0xff, 0xff, 0xff, 0xFF };
+    SDL_Color textBackgroundColor = { 0x00, 0x00, 0x00, 0x00 };
+
     int i;
     const char **text;
     text = help ? helptext : helpprompt;
-    SDL_Color textColor = {255, 255, 255, 5};
+//    cls();
+    SDL_GL_SwapWindow(window);
 
     for (i = 0; text[i]; i++) {
-        SDL_Surface *textSurface = TTF_RenderText_Solid(font, text[i], textColor);
+        SDL_Texture *texture = NULL;
+
+        SDL_Surface *textSurface = TTF_RenderText_Shaded(font, text[i], textColor, textBackgroundColor);
         if (!textSurface) {
             fprintf(stderr, "Failed to render text: %s\n", TTF_GetError());
+            fprintf(stderr, "Text: %s\n", text[0]);
+            fprintf(stderr, "i: %i\n", i);            
             continue;
         }
 
-        SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-        if (!textTexture) {
+        texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+        if (!texture) {
             fprintf(stderr, "Failed to create texture: %s\n", SDL_GetError());
             SDL_FreeSurface(textSurface);
             continue;
         }
 
-        int textWidth = textSurface->w;
-        int textHeight = textSurface->h;
-        SDL_Rect renderQuad = {5, win_height - (i + 1) * 20, textWidth, textHeight};
-        SDL_RenderCopy(renderer, textTexture, NULL, &renderQuad);
+        SDL_Rect textRect = {100, (i + 1) * 25, textSurface->w, textSurface->h};
+        SDL_RenderCopy(renderer, texture, NULL, &textRect);
         SDL_FreeSurface(textSurface);
-        SDL_DestroyTexture(textTexture);
+        SDL_DestroyTexture(texture);
     }
-*/
+
+    SDL_RenderPresent(renderer);
 }
 
 void render(SDL_Renderer *renderer)
@@ -165,7 +189,8 @@ void render(SDL_Renderer *renderer)
     setPerspective(45.0, (double)win_width / (double)win_height, 0.1, 100.0);
 
     glClearColor(0.0,0.0,0.0,1.0); 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_DEPTH_BUFFER_BIT);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -174,14 +199,25 @@ void render(SDL_Renderer *renderer)
     glRotatef(cam_theta, 0, 1, 0);
     glTranslatef(cam_pan[0], cam_pan[1], cam_pan[2]);
     glLightfv(GL_LIGHT0, GL_POSITION, lpos);
-    glPushMatrix();
-    if(anim) { glRotatef((SDL_GetTicks() - anim_start) / 10.0f, 0, 1, 0); }
 
-    drawObj();
+    if (anim) { glRotatef((SDL_GetTicks() - anim_start) / 10.0f, 0, 1, 0); }
 
-    print_help(renderer);
+    if (!help) { drawObj(); }
 
     nframes++;
+}
+
+
+void animations()
+{
+     if(anim) {
+         anim_start = SDL_GetTicks64();
+         nframes = 0;
+     } else {
+         double tm = SDL_GetTicks64() - anim_start;
+         long fps = (nframes) / tm * 1000;
+         printf("framerate: %ld.%ld fps\n", fps, fps);
+     }
 }
 
 int main(int argc, char **argv)
@@ -197,7 +233,7 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    font = TTF_OpenFont("CascadiaCode.ttf", 24);
+    font = TTF_OpenFont("CascadiaCode.ttf", 20);
     if (!font) {
         fprintf(stderr, "Failed to load font: %s\n", TTF_GetError());
         TTF_Quit();
@@ -212,9 +248,16 @@ int main(int argc, char **argv)
         return -1;
     }
 
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!window) {
+        fprintf(stderr, "Failed to create renderer\n");
+        SDL_Quit();
+        return -1;
+    }
+
     SDL_GLContext context = SDL_GL_CreateContext(window);
     SDL_GL_SetSwapInterval(0);
-
+    
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHTING);
@@ -242,18 +285,14 @@ int main(int argc, char **argv)
                             break;
                         case SDLK_SPACE:
                             anim ^= 1;
-                            if(anim) {
-                                anim_start = SDL_GetTicks64();
-                                nframes = 0;
-                            } else {
-                                double tm = SDL_GetTicks64() - anim_start;
-                                long fps = (nframes) / tm * 1000;
-                                printf("framerate: %ld.%ld fps\n", fps, fps);
-                            }
+                            animations();
                             break;
                         case SDLK_F1:
                             help ^= 1;
+                            if (help) print_help(renderer);
+//                            animations();
                             break;
+
                     }
                     break;
                 case SDL_MOUSEMOTION:
@@ -298,8 +337,15 @@ int main(int argc, char **argv)
             }
         }
 
-        render(renderer);
-        SDL_GL_SwapWindow(window);
+        if (help) {
+            print_help(renderer);
+            SDL_GL_SwapWindow(window);
+            drawObj();
+        } else {
+            render(renderer);
+            SDL_GL_SwapWindow(window);
+        }
+      
     }
 
     SDL_GL_DeleteContext(context);
