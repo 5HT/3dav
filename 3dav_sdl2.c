@@ -11,6 +11,7 @@ const char *helptext[] = {
     "|             Rotate: Left-MOUSE + DRAG            |",
     "|         Reposition: Middle-MOUSE + DRAG CURSOR   |",
     "|               Zoom: Right-MOUSE + DRAG UP/DOWN   |",
+    "|               Help: F1                           |",
     "|  Toggle fullscreen: F                            |",
     "|   Toggle animation: Space                        |",
     "|               Quit: Escape                       |",
@@ -136,7 +137,7 @@ void cls()
     squareRect.x = 0;
     squareRect.y = 0;
     squareRect.w = 800;
-    squareRect.h = 600;
+    squareRect.h = 300;
 
     SDL_RenderFillRect(renderer, &squareRect);
 
@@ -150,8 +151,7 @@ void print_help(SDL_Renderer *renderer)
     int i;
     const char **text;
     text = help ? helptext : helpprompt;
-//    cls();
-    SDL_GL_SwapWindow(window);
+    cls();
 
     for (i = 0; text[i]; i++) {
         SDL_Texture *texture = NULL;
@@ -177,7 +177,6 @@ void print_help(SDL_Renderer *renderer)
         SDL_DestroyTexture(texture);
     }
 
-    SDL_RenderPresent(renderer);
 }
 
 void render(SDL_Renderer *renderer)
@@ -202,7 +201,7 @@ void render(SDL_Renderer *renderer)
 
     if (anim) { glRotatef((SDL_GetTicks() - anim_start) / 10.0f, 0, 1, 0); }
 
-    if (!help) { drawObj(); }
+    drawObj();
 
     nframes++;
 }
@@ -289,8 +288,10 @@ int main(int argc, char **argv)
                             break;
                         case SDLK_F1:
                             help ^= 1;
-                            if (help) print_help(renderer);
-//                            animations();
+                            if (help) {
+                                print_help(renderer);
+                                SDL_RenderPresent(renderer);
+                            }
                             break;
 
                     }
@@ -338,9 +339,7 @@ int main(int argc, char **argv)
         }
 
         if (help) {
-            print_help(renderer);
-            SDL_GL_SwapWindow(window);
-            drawObj();
+
         } else {
             render(renderer);
             SDL_GL_SwapWindow(window);
