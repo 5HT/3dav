@@ -137,7 +137,7 @@ void cls()
     squareRect.x = 0;
     squareRect.y = 0;
     squareRect.w = 800;
-    squareRect.h = 300;
+    squareRect.h = 200;
 
     SDL_RenderFillRect(renderer, &squareRect);
 
@@ -226,6 +226,20 @@ int main(int argc, char **argv)
         return -1;
     }
 
+    window = SDL_CreateWindow("3DAV", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, win_width, win_height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN);
+    if (!window) {
+        fprintf(stderr, "Failed to create SDL window\n");
+        SDL_Quit();
+        return -1;
+    }
+
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!window) {
+        fprintf(stderr, "Failed to create renderer\n");
+        SDL_Quit();
+        return -1;
+    }
+
     if (TTF_Init() < 0) {
         fprintf(stderr, "Failed to initialize SDL_ttf: %s\n", TTF_GetError());
         SDL_Quit();
@@ -240,19 +254,6 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    window = SDL_CreateWindow("3DAV", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, win_width, win_height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN);
-    if (!window) {
-        fprintf(stderr, "Failed to create SDL window\n");
-        SDL_Quit();
-        return -1;
-    }
-
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!window) {
-        fprintf(stderr, "Failed to create renderer\n");
-        SDL_Quit();
-        return -1;
-    }
 a:
 
     SDL_GLContext context = SDL_GL_CreateContext(window);
@@ -262,7 +263,7 @@ a:
     glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-//    glClear(GL_DEPTH_BUFFER_BIT);
+    glClear(GL_DEPTH_BUFFER_BIT);
 
     loadObj("porsche.obj");
 
@@ -343,7 +344,6 @@ a:
         }
 
         if (help) {
-
         } else {
             render(renderer);
             SDL_GL_SwapWindow(window);
