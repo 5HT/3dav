@@ -240,7 +240,7 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    window = SDL_CreateWindow("3DAV", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, win_width, win_height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("3DAV", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, win_width, win_height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN);
     if (!window) {
         fprintf(stderr, "Failed to create SDL window\n");
         SDL_Quit();
@@ -253,15 +253,16 @@ int main(int argc, char **argv)
         SDL_Quit();
         return -1;
     }
+a:
 
     SDL_GLContext context = SDL_GL_CreateContext(window);
     SDL_GL_SetSwapInterval(0);
-    
+ 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    glClear(GL_DEPTH_BUFFER_BIT);
+//    glClear(GL_DEPTH_BUFFER_BIT);
 
     loadObj("porsche.obj");
 
@@ -291,6 +292,9 @@ int main(int argc, char **argv)
                             if (help) {
                                 print_help(renderer);
                                 SDL_RenderPresent(renderer);
+                            } else {
+                                SDL_GL_DeleteContext(context);
+                                goto a;
                             }
                             break;
 

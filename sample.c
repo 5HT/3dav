@@ -33,7 +33,8 @@ int main(int argc, char* args[]) {
                 "hello_sdl2",
                 SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                 SCREEN_WIDTH, SCREEN_HEIGHT,
-                SDL_WINDOW_SHOWN
+                //SDL_WINDOW_SHOWN | 
+		SDL_WINDOW_OPENGL
                 );
   if (window == NULL) {
     fprintf(stderr, "could not create window: %s\n", SDL_GetError());
